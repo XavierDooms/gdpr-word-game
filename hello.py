@@ -1,8 +1,9 @@
-#from flask import Flask
+from flask import Flask
 import numpy as np
 import random
-#app = Flask(__name__)
+app = Flask(__name__)
 
+solution = ""
 
 def create_matrix(w,h):
     Matrix = np.zeros((w,h), 'U1')
@@ -14,8 +15,26 @@ def create_matrix(w,h):
     
     return Matrix
 
+def check_location(Matrix,w,h,x,y,xd,yd):
+    if (xd>0 and (w-x)<4):
+        return False
+    if (xd<0 and x<4):
+        return False
+    if (yd>0 and (h-y)<4):
+        return False
+    if (yd<0 and y<4):
+        return False
+    return True
+    
+
 def check_direction(Matrix,x,y,xd,yd):
     return (Matrix[x][y]=='G' and Matrix[x+xd][y+yd]=='D' and Matrix[x+2*xd][y+2*yd]=='P' and Matrix[x+3*xd][y+3*yd]=='R')
+
+def check_full_direction(Matrix,w,h,x,y,xd,yd):
+    if (check_location(Matrix,w,h,x,y,xd,yd) and check_direction(Matrix,x,y,xd,yd)) :
+        solution = '[d,{1},{0}]'.format(x+1,y+1)
+        print solution
+        counter = counter + 1
 
 def count_matrix(Matrix,w,h):
     counter = 0
@@ -56,7 +75,7 @@ def matrix_to_string(Matrix):
     stringy = []
     for line in Matrix:
         stringy.append(' '.join(map(str, line)))
-    return '\n'.join(map(str, stringy))
+    return '<br />\n'.join(map(str, stringy))
 
 def create_and_print_matrix(w=4,h=4):
     print "Hello!"
@@ -76,18 +95,30 @@ def create_checked_matrix(w=4,h=4):
 
     print_matrix(Matrix, counter)
 
-    print ''
-    print matrix_to_string(Matrix)
+    #print ''
+    #print matrix_to_string(Matrix)
     print "Bye"
     return Matrix
 
-create_checked_matrix(10,10)
+#create_checked_matrix(10,10)
 
 
-#@app.route('/')
-#def index():   
-#    return 'Index Page'
+@app.route('/')
+def index():
+    html_string = "<html>\n"
+    html_string += "<head><style>body { font-family: Courier; }</style></head>\n"
+    html_string += "<body>\n"
+    html_string += "<h1>Find \"GDPR\"</h1>\n"
+    html_string += "<div>\n"
+    html_string += matrix_to_string(create_checked_matrix(10,10))
+    html_string += "</div>\n"
+    html_string += "<div hidden>\n"
+    html_string += "Location: {}\n".format(solution)
+    html_string += "</div>\n"
+    html_string += "\n</body>\n</html>"
 
-#@app.route('/hello')
-#def hello():
-#    return 'Hello, World'
+    return html_string
+
+@app.route('/hello')
+def hello():
+    return 'Hello, World'

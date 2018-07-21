@@ -52,6 +52,12 @@ def print_matrix(Matrix, counter):
     for line in Matrix:
         print ' '.join(map(str, line))
 
+def matrix_to_string(Matrix):
+    stringy = []
+    for line in Matrix:
+        stringy.append(' '.join(map(str, line)))
+    return '\n'.join(map(str, stringy))
+
 def create_and_print_matrix(w=4,h=4):
     print "Hello!"
     Matrix = create_matrix(w,h)
@@ -70,12 +76,10 @@ def create_checked_matrix(w=4,h=4):
 
     print_matrix(Matrix, counter)
 
+    print ''
+    print matrix_to_string(Matrix)
     print "Bye"
     return Matrix
-
-def matrix_to_string(Matrix):
-
-    return ""
 
 create_checked_matrix(10,10)
 

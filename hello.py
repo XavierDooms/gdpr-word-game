@@ -23,3 +23,6 @@ def word(word):
     html_string += "\n</body>\n</html>"
 
     return html_string
+
+if __name__ == "__main__":
+    app.run()

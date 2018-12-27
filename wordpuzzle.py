@@ -41,12 +41,12 @@ class WordPuzzle:
         return True
 
     def direction_has_solution(self,position,direction):
-        if (not self.direction_within_borders(position,self.direction_dict[direction]) or 
+        if (not self.direction_within_borders(position,self.direction_dict[direction]) or
             not self.check_direction(position,self.direction_dict[direction])):
             return 0
 
         self.solution = '[{2},{1},{0}]'.format(position[0]+1,position[1]+1,direction)
-        print self.solution
+        print(self.solution)
         return 1
 
     def has_only_one_solution(self):
@@ -86,8 +86,8 @@ class WordPuzzle:
 
 def test_puzzle_module():
     puzzle = WordPuzzle(20,20,"OLIFANT")
-    print puzzle.html_string()
-    print puzzle.solution
+    print(puzzle.html_string())
+    print(puzzle.solution)
 
 if __name__ == "__main__":
     test_puzzle_module()
